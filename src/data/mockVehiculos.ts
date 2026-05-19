@@ -13,28 +13,30 @@ export const mockVehiculos: Vehiculo[] = [
     placa_final: 1,
     transmision: "Automático",
     color: "Rojo Diamante",
-    descripcion_marketing: "Vehículo en perfecto estado, único dueño. Mantenimientos al día en concesionario. Diseño elegante y deportivo, ideal para la ciudad y carretera. Aprovecha esta oportunidad.",
+    descripcion_marketing: "Vehículo en perfecto estado, único dueño. Mantenimientos al día en concesionario autorizado Mazda. Diseño elegante y deportivo, ideal para la ciudad y carretera. Cuenta con tecnología de seguridad i-Activsense, sistema de audio premium Bose y techo corredizo. Aprovecha esta oportunidad única en el mercado caleño.",
     urls_imagenes: [
-      "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fd?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=800"
-    ]
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?auto=format&fit=crop&w=800&q=80",
+    ],
   },
   {
     id: "2",
     creado: Date.now() - 86400000,
-    destacado: false,
+    destacado: true,
     marca: "Chevrolet",
-    modelo: "Tracker Turbo",
+    modelo: "Tracker Turbo Premier",
     año: 2021,
     precio: 75500000,
     kilometraje: 45000,
     placa_final: 4,
     transmision: "Automático",
-    color: "Gris",
-    descripcion_marketing: "Excelente SUV familiar. Espaciosa, económica en consumo y con toda la tecnología que necesitas. Pantalla táctil, cámara de reversa y sensores.",
+    color: "Gris Platino",
+    descripcion_marketing: "Excelente SUV familiar con motor turbo de alto rendimiento. Espaciosa, económica en consumo y con toda la tecnología que necesitas: pantalla táctil MyLink, cámara de reversa 360° y sensores de parqueo. Mantenimientos realizados en concesionario.",
     urls_imagenes: [
-      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800"
-    ]
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800&q=80",
+    ],
   },
   {
     id: "3",
@@ -48,10 +50,11 @@ export const mockVehiculos: Vehiculo[] = [
     placa_final: 8,
     transmision: "Automático",
     color: "Blanco Perlado",
-    descripcion_marketing: "Como nueva. La confiabilidad de Toyota en un formato SUV moderno. Híbrida, no tiene pico y placa. Excelente rendimiento de combustible.",
+    descripcion_marketing: "Como nueva. La confiabilidad de Toyota en un formato SUV moderno. Tecnología híbrida, sin restricción de pico y placa. Excelente rendimiento de combustible (18 km/l). Pantalla táctil, Apple CarPlay, sistema de seguridad Toyota Safety Sense de segunda generación.",
     urls_imagenes: [
-      "https://images.unsplash.com/photo-1626668893632-6f0a44733db9?auto=format&fit=crop&q=80&w=800"
-    ]
+      "https://images.unsplash.com/photo-1626668893632-6f0a44733db9?auto=format&fit=crop&w=800&q=80",
+      "https://images.unsplash.com/photo-1619682817481-e994891cd1f5?auto=format&fit=crop&w=800&q=80",
+    ],
   },
   {
     id: "4",
@@ -64,10 +67,44 @@ export const mockVehiculos: Vehiculo[] = [
     kilometraje: 60000,
     placa_final: 5,
     transmision: "Mecánico",
-    color: "Plata",
-    descripcion_marketing: "Ideal para la ciudad. Muy económico, fácil de estacionar. Mantenimientos económicos. Perfecto como primer carro.",
+    color: "Plata Metálico",
+    descripcion_marketing: "Ideal para la ciudad. Muy económico, fácil de parquear. Mantenimientos económicos en red Kia. Perfecto como primer carro o vehículo secundario del hogar. Documentación al día, listo para traspaso inmediato.",
     urls_imagenes: [
-      "https://images.unsplash.com/photo-1619682817481-e994891cd1f5?auto=format&fit=crop&q=80&w=800"
-    ]
-  }
+      "https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=800&q=80",
+    ],
+  },
+  {
+    id: "5",
+    creado: Date.now() - 345600000,
+    destacado: false,
+    marca: "Renault",
+    modelo: "Duster Intens 4x4",
+    año: 2021,
+    precio: 68900000,
+    kilometraje: 38000,
+    placa_final: 2,
+    transmision: "Mecánico",
+    color: "Naranja Atacama",
+    descripcion_marketing: "Aventura sin límites en la ciudad y fuera de ella. Motor 2.0L, tracción 4x4, gran distancia al suelo ideal para vías de Colombia. Interior espacioso con pantalla táctil Media Nav. Un vehículo que combina robustez y comodidad.",
+    urls_imagenes: [
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=800&q=80",
+    ],
+  },
+  {
+    id: "6",
+    creado: Date.now() - 432000000,
+    destacado: false,
+    marca: "Hyundai",
+    modelo: "Tucson Modern",
+    año: 2022,
+    precio: 98500000,
+    kilometraje: 22000,
+    placa_final: 9,
+    transmision: "Automático",
+    color: "Azul Escencia",
+    descripcion_marketing: "Diseño vanguardista y tecnología de punta. El Tucson 2022 es uno de los SUV más premiados de su segmento. Control de crucero adaptativo, frenado de emergencia autónomo y sistema BlueLink conectado. Un vehículo que eleva tu experiencia de manejo.",
+    urls_imagenes: [
+      "https://images.unsplash.com/photo-1616422285623-13ff0162193c?auto=format&fit=crop&w=800&q=80",
+    ],
+  },
 ];
