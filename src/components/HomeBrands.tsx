@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 const brands = [
   { name: 'bmw', color: 'white' },
