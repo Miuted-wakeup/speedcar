@@ -168,7 +168,7 @@ export default function Vitrina() {
       className="bg-surface-alt min-h-screen pb-16 pt-24"
     >
       {/* ── Sección de Catálogo ── */}
-      <section id="vitrina" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section id="vitrina" className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
         {/* Barra de Búsqueda Inteligente */}
         <SmartSearchBar 
@@ -232,13 +232,13 @@ export default function Vitrina() {
           <div className="flex-grow w-full">
             {isSearchLoading ? (
               // Shimmer effect
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                {Array.from({ length: 3 }).map((_, i) => (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+                {Array.from({ length: 4 }).map((_, i) => (
                   <TarjetaVehiculoSkeleton key={i} />
                 ))}
               </div>
             ) : vehiculosFiltrados.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
                 {vehiculosFiltrados.map((vehiculo, i) => (
                   <TarjetaVehiculo key={vehiculo.id} vehiculo={vehiculo} index={i} />
                 ))}
@@ -285,7 +285,7 @@ export default function Vitrina() {
                       Vehículos recomendados con excelente relación costo-beneficio en Cali.
                     </p>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
                     {alternativasDestacadas.map((vehiculo, i) => (
                       <TarjetaVehiculo key={`alt-${vehiculo.id}`} vehiculo={vehiculo} index={i} />
                     ))}
