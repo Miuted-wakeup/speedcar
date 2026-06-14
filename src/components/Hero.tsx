@@ -113,12 +113,12 @@ export default function Hero({ vehiculos = [] }: Props) {
             <div className="flex flex-col sm:flex-row gap-4 pt-5">
               <Link to="/comprar" className="btn-primary shadow-xl shadow-primary/30 !px-10 !py-4 text-base font-bold hover:scale-[1.02] active:scale-[0.98] transition-all">
                 <Search size={20} />
-                Explorar Vitrina
+                Comprar un Carro
               </Link>
-              <a href="https://wa.me/573137148566?text=Hola" target="_blank" rel="noopener noreferrer" className="btn-secondary !px-8 !py-4 text-base font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all backdrop-blur-xs bg-surface/30">
-                Hablar con un Asesor
+              <Link to="/vender" className="btn-secondary !px-8 !py-4 text-base font-semibold hover:scale-[1.02] active:scale-[0.98] transition-all backdrop-blur-xs bg-surface-alt hover:bg-surface border border-primary/20 hover:border-primary/50 text-text-main hover:text-primary">
+                Vender mi Carro
                 <ArrowRight size={18} />
-              </a>
+              </Link>
             </div>
           </div>
 
