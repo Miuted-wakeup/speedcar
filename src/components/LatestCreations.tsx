@@ -75,10 +75,6 @@ export default function LatestCreations({ vehiculos }: Props) {
                       📍 {vehiculo.ubicacion_ciudad || "Cali, Valle"}
                     </span>
                   </div>
-                  
-                  <p className="line-clamp-2 text-white/70 text-xs md:text-sm mt-1 leading-relaxed hidden md:block">
-                    {vehiculo.descripcion_marketing}
-                  </p>
                 </div>
               </div>
             </div>
