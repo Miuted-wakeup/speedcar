@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Upload, Plus, Trash2, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import type { Vehiculo } from '../types';
+import MapPicker from '../components/MapPicker';
 
 export default function AdminUpload() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,8 @@ export default function AdminUpload() {
     descripcion_marketing: '', // Si se deja en blanco, la IA lo genera en el BE
     notas_vendedor: '',
     destacado: false,
+    latitud: null as number | null,
+    longitud: null as number | null,
   });
 
   const [imagenes, setImagenes] = useState<File[]>([]);
@@ -115,6 +118,8 @@ export default function AdminUpload() {
         precio: Number(formData.precio),
         kilometraje: Number(formData.kilometraje),
         placa_final: Number(formData.placa_final),
+        latitud: formData.latitud,
+        longitud: formData.longitud,
       };
 
       const vehiculoRes = await fetch(`${BACKEND_URL}/api/vehiculos`, {
@@ -153,6 +158,7 @@ export default function AdminUpload() {
         marca: '', modelo: '', año: new Date().getFullYear(),
         precio: '', kilometraje: '', placa_final: '', transmision: 'Automático',
         color: '', descripcion_marketing: '', notas_vendedor: '', destacado: false,
+        latitud: null, longitud: null,
       });
 
     } catch (err: any) {
@@ -229,6 +235,15 @@ export default function AdminUpload() {
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-text-muted uppercase">Placa Final (0-9) *</label>
                 <input required type="number" min="0" max="9" name="placa_final" value={formData.placa_final} onChange={handleInputChange} placeholder="Ej: 4" className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
+              </div>
+              <div className="space-y-1.5 md:col-span-2">
+                <label className="text-xs font-bold text-text-muted uppercase">Ubicación Exacta (Opcional)</label>
+                <p className="text-[11px] text-text-muted mb-2">Mueve el mapa o haz clic para marcar dónde está el vehículo.</p>
+                <MapPicker 
+                  position={formData.latitud ? { lat: formData.latitud, lng: formData.longitud! } : null}
+                  onChange={(pos) => setFormData({ ...formData, latitud: pos.lat, longitud: pos.lng })}
+                  className="w-full h-64 rounded-xl overflow-hidden border border-border"
+                />
               </div>
             </div>
 

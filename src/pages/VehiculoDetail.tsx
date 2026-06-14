@@ -446,8 +446,8 @@ export default function VehiculoDetail() {
               {/* Mapa de Ubicación */}
               <div className="pt-1">
                 <LocationMap 
-                  location="Sede Sur, Cali" 
-                  coordinates="3.3854° N, 76.5360° W"
+                  location={vehiculo.latitud ? "Ubicación del Vehículo" : "Sede Sur, Cali"} 
+                  coordinates={vehiculo.latitud && vehiculo.longitud ? [vehiculo.latitud, vehiculo.longitud] : [3.3854, -76.5360]}
                   className="w-full"
                 />
               </div>

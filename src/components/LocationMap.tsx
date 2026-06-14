@@ -1,15 +1,29 @@
 import React, { useState, useRef } from "react"
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion"
+import { MapContainer, TileLayer, Marker } from 'react-leaflet'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
+
+// Fix for default marker icon in Leaflet + Vite
+import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
+import iconUrl from 'leaflet/dist/images/marker-icon.png';
+import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl,
+  iconUrl,
+  shadowUrl,
+});
 
 interface LocationMapProps {
   location?: string
-  coordinates?: string
+  coordinates?: [number, number] | string
   className?: string
 }
 
 export default function LocationMap({
   location = "Cali, Valle del Cauca",
-  coordinates = "3.4516° N, 76.5320° W",
+  coordinates = [3.4516, -76.5320],
   className = "",
 }: LocationMapProps) {
   const [isHovered, setIsHovered] = useState(false)
@@ -87,151 +101,30 @@ export default function LocationMap({
             >
               <div className="absolute inset-0 bg-surface" />
 
-              <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
-                {/* Main roads - using foreground with opacity */}
-                <motion.line
-                  x1="0%"
-                  y1="35%"
-                  x2="100%"
-                  y2="35%"
-                  className="stroke-text-main/25"
-                  strokeWidth="4"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                />
-                <motion.line
-                  x1="0%"
-                  y1="65%"
-                  x2="100%"
-                  y2="65%"
-                  className="stroke-text-main/25"
-                  strokeWidth="4"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                />
-
-                {/* Vertical main roads */}
-                <motion.line
-                  x1="30%"
-                  y1="0%"
-                  x2="30%"
-                  y2="100%"
-                  className="stroke-text-main/20"
-                  strokeWidth="3"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                />
-                <motion.line
-                  x1="70%"
-                  y1="0%"
-                  x2="70%"
-                  y2="100%"
-                  className="stroke-text-main/20"
-                  strokeWidth="3"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                />
-
-                {/* Secondary streets */}
-                {[20, 50, 80].map((y, i) => (
-                  <motion.line
-                    key={`h-${i}`}
-                    x1="0%"
-                    y1={`${y}%`}
-                    x2="100%"
-                    y2={`${y}%`}
-                    className="stroke-text-main/10"
-                    strokeWidth="1.5"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.5, delay: 0.6 + i * 0.1 }}
-                  />
-                ))}
-                {[15, 45, 55, 85].map((x, i) => (
-                  <motion.line
-                    key={`v-${i}`}
-                    x1={`${x}%`}
-                    y1="0%"
-                    x2={`${x}%`}
-                    y2="100%"
-                    className="stroke-text-main/10"
-                    strokeWidth="1.5"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 0.5, delay: 0.7 + i * 0.1 }}
-                  />
-                ))}
-              </svg>
-
-              {/* Buildings - using muted-foreground */}
-              <motion.div
-                className="absolute top-[40%] left-[10%] w-[15%] h-[20%] rounded-sm bg-text-muted/30 border border-text-muted/20"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.5 }}
-              />
-              <motion.div
-                className="absolute top-[15%] left-[35%] w-[12%] h-[15%] rounded-sm bg-text-muted/25 border border-text-muted/15"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.6 }}
-              />
-              <motion.div
-                className="absolute top-[70%] left-[75%] w-[18%] h-[18%] rounded-sm bg-text-muted/28 border border-text-muted/18"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.7 }}
-              />
-              <motion.div
-                className="absolute top-[20%] right-[10%] w-[10%] h-[25%] rounded-sm bg-text-muted/22 border border-text-muted/15"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.55 }}
-              />
-              <motion.div
-                className="absolute top-[55%] left-[5%] w-[8%] h-[12%] rounded-sm bg-text-muted/20 border border-text-muted/12"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.65 }}
-              />
-              <motion.div
-                className="absolute top-[8%] left-[75%] w-[14%] h-[10%] rounded-sm bg-text-muted/22 border border-text-muted/15"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.75 }}
-              />
-
-              <motion.div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                initial={{ scale: 0, y: -20 }}
-                animate={{ scale: 1, y: 0 }}
-                transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.3 }}
+              {/* Capa de fondo del mapa real o SVG simulado */}
+              <div className="absolute inset-0 bg-surface z-0" />
+              <MapContainer 
+                center={typeof coordinates === 'string' ? [3.4516, -76.5320] : coordinates} 
+                zoom={14} 
+                zoomControl={false}
+                scrollWheelZoom={false}
+                dragging={false}
+                style={{ height: '100%', width: '100%', zIndex: 1 }}
               >
-                <svg
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  className="drop-shadow-lg"
-                  style={{ filter: "drop-shadow(0 0 10px rgba(16, 185, 129, 0.5))" }}
-                >
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#10B981" />
-                  <circle cx="12" cy="9" r="2.5" className="fill-surface" />
-                </svg>
-              </motion.div>
+                <TileLayer
+                  url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                />
+                <Marker position={typeof coordinates === 'string' ? [3.4516, -76.5320] : coordinates} />
+              </MapContainer>
 
-              <div className="absolute inset-0 bg-gradient-to-t from-surface-alt via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface-alt via-transparent to-transparent opacity-60 z-10 pointer-events-none" />
             </motion.div>
           )}
         </AnimatePresence>
 
         {/* Grid pattern - only show when collapsed */}
         <motion.div
-          className="absolute inset-0 opacity-10"
+          className="absolute inset-0 opacity-10 pointer-events-none z-10"
           animate={{ opacity: isExpanded ? 0 : 0.1 }}
           transition={{ duration: 0.3 }}
         >
@@ -245,8 +138,8 @@ export default function LocationMap({
           </svg>
         </motion.div>
 
-        {/* Content */}
-        <div className="relative z-10 h-full flex flex-col justify-between p-5">
+        {/* Content Overlay */}
+        <div className="relative z-20 h-full flex flex-col justify-between p-5 pointer-events-none">
           {/* Top section */}
           <div className="flex items-start justify-between">
             <div className="relative">

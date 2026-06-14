@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Camera, TrendingUp, ShieldCheck, MessageCircle, HelpCircle, Star, Clock, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import MapPicker from '../components/MapPicker';
 
 export default function Vender() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ export default function Vender() {
     modelo: '',
     año: '',
     kilometraje: '',
+    latitud: null as number | null,
+    longitud: null as number | null,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +30,8 @@ export default function Vender() {
       `- Nombre: ${formData.nombre}\n` +
       `- Teléfono: ${formData.telefono}\n` +
       `- Vehículo: ${formData.marca} ${formData.modelo} (${formData.año})\n` +
-      `- Kilometraje: ${formData.kilometraje} km\n\n` +
+      `- Kilometraje: ${formData.kilometraje} km\n` +
+      `- Ubicación GPS: ${formData.latitud && formData.longitud ? `https://www.google.com/maps?q=${formData.latitud},${formData.longitud}` : 'No especificada'}\n\n` +
       `Quedo atento para coordinar la sesión de fotos y peritaje.`;
 
     const whatsappUrl = `https://wa.me/573137148566?text=${encodeURIComponent(message)}`;
@@ -226,6 +230,18 @@ export default function Vender() {
                         onChange={handleChange}
                         placeholder="Ej. 35000"
                         className="w-full px-4 py-3 rounded-xl border border-border/80 bg-surface-alt text-sm text-text-main placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300 hover:border-primary/30 shadow-sm"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Ubicación del vehículo</label>
+                    <p className="text-xs text-text-muted/80 mb-3">Haz clic en el mapa para marcar dónde se encuentra el carro para el peritaje.</p>
+                    <div className="h-48 rounded-xl overflow-hidden border border-border/80 shadow-sm">
+                      <MapPicker 
+                        position={formData.latitud ? { lat: formData.latitud, lng: formData.longitud! } : null} 
+                        onChange={(pos) => setFormData({ ...formData, latitud: pos.lat, longitud: pos.lng })} 
+                        className="w-full h-full"
                       />
                     </div>
                   </div>
