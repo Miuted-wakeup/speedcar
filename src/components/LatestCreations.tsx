@@ -71,6 +71,9 @@ export default function LatestCreations({ vehiculos }: Props) {
                     <span className="px-2 py-1 bg-black/40 rounded-md text-xs font-medium text-white/80 border border-white/10">
                       {vehiculo.kilometraje.toLocaleString('es-CO')} km
                     </span>
+                    <span className="px-2 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-md text-xs font-bold text-emerald-400">
+                      📍 {vehiculo.ubicacion_ciudad || "Cali, Valle"}
+                    </span>
                   </div>
                   
                   <p className="line-clamp-2 text-white/70 text-xs md:text-sm mt-1 leading-relaxed hidden md:block">
