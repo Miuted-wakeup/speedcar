@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import LatestCreations from '../components/LatestCreations';
+import HomeBrands from '../components/HomeBrands';
+import HomeCTA from '../components/HomeCTA';
+import HomeTestimonials from '../components/HomeTestimonials';
+import HomeSocial from '../components/HomeSocial';
 import type { Vehiculo } from '../types';
 import { mockVehiculos } from '../data/mockVehiculos';
 
@@ -39,9 +43,13 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-surface-alt min-h-screen pb-16">
+    <main className="bg-surface-alt min-h-screen pb-0">
       <Hero vehiculos={vehiculos} />
+      <HomeBrands />
       <LatestCreations vehiculos={vehiculos} />
+      <HomeTestimonials />
+      <HomeCTA />
+      <HomeSocial />
     </main>
   );
 }

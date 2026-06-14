@@ -62,7 +62,7 @@ export default function LatestCreations({ vehiculos }: Props) {
                 
                 <div className="mt-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-150">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="px-3 py-1 bg-primary/20 border border-primary/50 text-primary-light font-mono font-bold rounded-lg text-sm shadow-[0_0_15px_rgba(var(--color-primary),0.3)]">
+                    <span className="px-3 py-1 bg-primary/20 border border-primary/50 text-emerald-400 font-mono font-bold rounded-lg text-sm shadow-[0_0_15px_rgba(var(--color-primary),0.3)]">
                       {formatPrecio(vehiculo.precio)}
                     </span>
                     <span className="px-2 py-1 bg-black/40 rounded-md text-xs font-medium text-white/80 border border-white/10">
