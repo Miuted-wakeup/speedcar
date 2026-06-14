@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import TarjetaVehiculo from '../components/TarjetaVehiculo';
 import SidebarFilters from '../components/SidebarFilters';
 import type { FiltrosState } from '../components/SidebarFilters';
@@ -160,7 +161,12 @@ export default function Vitrina() {
   const alternativasDestacadas = mockVehiculos.filter(v => v.destacado);
 
   return (
-    <main className="bg-surface-alt min-h-screen pb-16 pt-24">
+    <motion.main 
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      className="bg-surface-alt min-h-screen pb-16 pt-24"
+    >
       {/* ── Sección de Catálogo ── */}
       <section id="vitrina" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
@@ -172,14 +178,23 @@ export default function Vitrina() {
         />
 
         {/* Encabezado y botón de filtros móvil */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+        <motion.div 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4"
+        >
           <div>
             <h2 className="text-3xl font-extrabold text-text-main tracking-tight flex items-center gap-2.5 font-display">
               <span>Vitrina de Usados Garantizados</span>
               {isSemanticActive && (
-                <span className="badge-primary inline-flex items-center gap-1 text-xs py-1 px-2.5 bg-primary/10 text-primary">
+                <motion.span 
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="badge-primary inline-flex items-center gap-1 text-xs py-1 px-2.5 bg-primary/10 text-primary"
+                >
                   <Sparkles size={12} /> Búsqueda IA activa
-                </span>
+                </motion.span>
               )}
             </h2>
             <p className="mt-2 text-text-muted text-sm">
@@ -199,7 +214,7 @@ export default function Vitrina() {
             <SlidersHorizontal size={16} />
             Filtrar Resultados
           </button>
-        </div>
+        </motion.div>
 
         {/* Layout de dos columnas */}
         <div className="flex flex-col lg:flex-row gap-8 items-start">
@@ -301,6 +316,6 @@ export default function Vitrina() {
 
         </div>
       </section>
-    </main>
+    </motion.main>
   );
 }

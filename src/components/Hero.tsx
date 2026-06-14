@@ -134,12 +134,21 @@ export default function Hero({ vehiculos = [] }: Props) {
                       {[...cardData, ...cardData, ...cardData].map((card, index) => (
                           <div 
                             key={index} 
+                            role={card.id ? "button" : "presentation"}
+                            tabIndex={card.id ? 0 : -1}
+                            aria-label={card.id ? `Ver detalles de ${card.title}` : undefined}
                             onClick={() => card.id ? navigate(`/vehiculo/${card.id}`) : null}
-                            className={`w-48 md:w-56 mx-3 h-[18rem] md:h-[24rem] relative group hover:scale-95 transition-all duration-500 rounded-[2rem] overflow-hidden shadow-lg border border-border/50 bg-surface ${card.id ? 'cursor-pointer' : ''}`}
+                            onKeyDown={(e) => {
+                              if (card.id && (e.key === 'Enter' || e.key === ' ')) {
+                                e.preventDefault();
+                                navigate(`/vehiculo/${card.id}`);
+                              }
+                            }}
+                            className={`w-48 md:w-56 mx-3 h-[18rem] md:h-[24rem] relative group hover:scale-95 focus-visible:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary transition-all duration-500 rounded-[2rem] overflow-hidden shadow-lg border border-border/50 bg-surface ${card.id ? 'cursor-pointer' : ''}`}
                           >
                               <img src={card.image} alt={card.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-                              <div className="flex items-center justify-center p-4 opacity-0 group-hover:opacity-100 transition-all duration-500 absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black/80 via-black/40 to-black/20 backdrop-blur-[2px]">
-                                  <p className="text-white text-lg font-bold text-center translate-y-4 group-hover:translate-y-0 transition-transform duration-500 font-display shadow-black drop-shadow-lg leading-tight">{card.title}</p>
+                              <div className="absolute inset-x-3 bottom-3 p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] translate-y-4 group-hover:translate-y-0">
+                                  <p className="text-white text-sm md:text-base font-bold text-center font-display tracking-wide drop-shadow-md">{card.title}</p>
                               </div>
                           </div>
                       ))}
