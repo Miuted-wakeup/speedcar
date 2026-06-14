@@ -21,4 +21,8 @@ export interface Vehiculo {
   // Multimedia
   urls_imagenes: string[]; // Lista de URLs de Firebase Storage
   url_video_corto?: string; // Opcional (TikTok/Reel link)
+  
+  // Ubicación
+  latitud?: number;
+  longitud?: number;
 }
