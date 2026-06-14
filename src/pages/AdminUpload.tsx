@@ -17,6 +17,7 @@ export default function AdminUpload() {
     descripcion_marketing: '', // Si se deja en blanco, la IA lo genera en el BE
     notas_vendedor: '',
     destacado: false,
+    ubicacion_ciudad: '',
     latitud: null as number | null,
     longitud: null as number | null,
   });
@@ -118,6 +119,7 @@ export default function AdminUpload() {
         precio: Number(formData.precio),
         kilometraje: Number(formData.kilometraje),
         placa_final: Number(formData.placa_final),
+        ubicacion_ciudad: formData.ubicacion_ciudad.trim() !== '' ? formData.ubicacion_ciudad : null,
         latitud: formData.latitud,
         longitud: formData.longitud,
       };
@@ -158,7 +160,7 @@ export default function AdminUpload() {
         marca: '', modelo: '', año: new Date().getFullYear(),
         precio: '', kilometraje: '', placa_final: '', transmision: 'Automático',
         color: '', descripcion_marketing: '', notas_vendedor: '', destacado: false,
-        latitud: null, longitud: null,
+        ubicacion_ciudad: '', latitud: null, longitud: null,
       });
 
     } catch (err: any) {
@@ -237,7 +239,11 @@ export default function AdminUpload() {
                 <input required type="number" min="0" max="9" name="placa_final" value={formData.placa_final} onChange={handleInputChange} placeholder="Ej: 4" className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
               </div>
               <div className="space-y-1.5 md:col-span-2">
-                <label className="text-xs font-bold text-text-muted uppercase">Ubicación Exacta (Opcional)</label>
+                <label className="text-xs font-bold text-text-muted uppercase">Ciudad o Barrio (Ej. Cali, Sur) *</label>
+                <input required name="ubicacion_ciudad" value={formData.ubicacion_ciudad} onChange={handleInputChange} placeholder="Ej: Ciudad Jardín, Cali" className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
+              </div>
+              <div className="space-y-1.5 md:col-span-2">
+                <label className="text-xs font-bold text-text-muted uppercase">Ubicación Exacta en el Mapa (Opcional)</label>
                 <p className="text-[11px] text-text-muted mb-2">Mueve el mapa o haz clic para marcar dónde está el vehículo.</p>
                 <MapPicker 
                   position={formData.latitud ? { lat: formData.latitud, lng: formData.longitud! } : null}

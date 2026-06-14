@@ -11,6 +11,7 @@ export default function Vender() {
     modelo: '',
     año: '',
     kilometraje: '',
+    ubicacion_ciudad: '',
     latitud: null as number | null,
     longitud: null as number | null,
   });
@@ -31,6 +32,7 @@ export default function Vender() {
       `- Teléfono: ${formData.telefono}\n` +
       `- Vehículo: ${formData.marca} ${formData.modelo} (${formData.año})\n` +
       `- Kilometraje: ${formData.kilometraje} km\n` +
+      `- Ciudad/Sector: ${formData.ubicacion_ciudad}\n` +
       `- Ubicación GPS: ${formData.latitud && formData.longitud ? `https://www.google.com/maps?q=${formData.latitud},${formData.longitud}` : 'No especificada'}\n\n` +
       `Quedo atento para coordinar la sesión de fotos y peritaje.`;
 
@@ -235,7 +237,21 @@ export default function Vender() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Ubicación del vehículo</label>
+                    <label htmlFor="ubicacion_ciudad" className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Ciudad o Sector *</label>
+                    <input
+                      required
+                      type="text"
+                      id="ubicacion_ciudad"
+                      name="ubicacion_ciudad"
+                      value={formData.ubicacion_ciudad}
+                      onChange={handleChange}
+                      placeholder="Ej. Cali, Ciudad Jardín"
+                      className="w-full px-4 py-3 rounded-xl border border-border/80 bg-surface-alt text-sm text-text-main placeholder:text-text-muted/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300 hover:border-primary/30 shadow-sm"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Ubicación exacta en mapa (Opcional)</label>
                     <p className="text-xs text-text-muted/80 mb-3">Haz clic en el mapa para marcar dónde se encuentra el carro para el peritaje.</p>
                     <div className="h-48 rounded-xl overflow-hidden border border-border/80 shadow-sm">
                       <MapPicker 

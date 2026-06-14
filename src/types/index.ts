@@ -23,6 +23,7 @@ export interface Vehiculo {
   url_video_corto?: string; // Opcional (TikTok/Reel link)
   
   // Ubicación
+  ubicacion_ciudad?: string; // Ej: Cali, Yumbo
   latitud?: number;
   longitud?: number;
 }

@@ -13,30 +13,35 @@ export default function Hero({ vehiculos = [] }: Props) {
   const [stopScroll, setStopScroll] = useState(false);
   const navigate = useNavigate();
 
-  const defaultCardData: Array<{ id?: string, title: string, image: string }> = [
+  const defaultCardData: Array<{ id?: string, title: string, location: string, image: string }> = [
     {
       id: undefined,
       title: "Deportivos de Alta Gama",
+      location: "Sede Norte, Cali",
       image: "https://images.unsplash.com/photo-1503376760367-11ea8eb222c9?q=80&w=600&h=800&auto=format&fit=crop",
     },
     {
       id: undefined,
       title: "SUVs Imponentes",
+      location: "Ciudad Jardín, Cali",
       image: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?q=80&w=600&h=800&auto=format&fit=crop",
     },
     {
       id: undefined,
       title: "Sedanes Ejecutivos",
+      location: "Palmira, Valle",
       image: "https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=600&h=800&auto=format&fit=crop",
     },
     {
       id: undefined,
       title: "Clásicos Modernos",
+      location: "Yumbo, Valle",
       image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=600&h=800&auto=format&fit=crop",
     },
     {
       id: undefined,
       title: "Ediciones Limitadas",
+      location: "Jamundí, Valle",
       image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=600&h=800&auto=format&fit=crop",
     }
   ];
@@ -46,6 +51,7 @@ export default function Hero({ vehiculos = [] }: Props) {
     ? vehiculos.slice(0, 5).map(v => ({
         id: v.id,
         title: `${v.marca} ${v.modelo}`,
+        location: v.ubicacion_ciudad || "Cali, Valle",
         image: v.urls_imagenes[0]
       }))
     : defaultCardData;
@@ -147,8 +153,9 @@ export default function Hero({ vehiculos = [] }: Props) {
                             className={`w-48 md:w-56 mx-3 h-[18rem] md:h-[24rem] relative group hover:scale-95 focus-visible:scale-95 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary transition-all duration-500 rounded-[2rem] overflow-hidden shadow-lg border border-border/50 bg-surface ${card.id ? 'cursor-pointer' : ''}`}
                           >
                               <img src={card.image} alt={card.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy" />
-                              <div className="absolute inset-x-3 bottom-3 p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] translate-y-4 group-hover:translate-y-0">
+                              <div className="absolute inset-x-3 bottom-3 p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 bg-black/40 backdrop-blur-md border border-white/20 rounded-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.3)] translate-y-4 group-hover:translate-y-0">
                                   <p className="text-white text-sm md:text-base font-bold text-center font-display tracking-wide drop-shadow-md">{card.title}</p>
+                                  <p className="text-emerald-400 text-[10px] md:text-xs font-semibold text-center mt-0.5 drop-shadow-sm">{card.location}</p>
                               </div>
                           </div>
                       ))}
