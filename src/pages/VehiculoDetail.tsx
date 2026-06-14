@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import type { Vehiculo } from '../types';
 import { mockVehiculos } from '../data/mockVehiculos';
 import ImageEcommerceMagnifier from '../components/ImageEcommerceMagnifier';
+import LocationMap from '../components/LocationMap';
 import {
   ChevronLeft, ChevronRight, ArrowLeft,
   MessageCircle, Gauge, Palette, Settings2,
@@ -440,6 +441,15 @@ export default function VehiculoDetail() {
                     </div>
                   ))}
                 </dl>
+              </div>
+
+              {/* Mapa de Ubicación */}
+              <div className="pt-1">
+                <LocationMap 
+                  location="Sede Sur, Cali" 
+                  coordinates="3.3854° N, 76.5360° W"
+                  className="w-full"
+                />
               </div>
 
               {/* CTA escritorio */}
