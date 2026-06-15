@@ -1,10 +1,40 @@
-import { useState } from 'react';
-import { Upload, Plus, Trash2, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Upload, Plus, Trash2, CheckCircle, AlertCircle, Loader2, Lock, LogOut } from 'lucide-react';
+import { signInWithEmailAndPassword, onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { auth } from '../lib/firebase';
 import { motion, AnimatePresence } from 'motion/react';
 import type { Vehiculo } from '../types';
 import MapPicker from '../components/MapPicker';
 
 export default function AdminUpload() {
+  const [user, setUser] = useState<User | null>(null);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setIsAuthChecking(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError('');
+    try {
+      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+    } catch (err: any) {
+      setLoginError('Credenciales inválidas o acceso denegado.');
+    }
+  };
+
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
+
   const [formData, setFormData] = useState({
     marca: '',
     modelo: '',
@@ -180,19 +210,66 @@ export default function AdminUpload() {
     }
   };
 
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen bg-surface-alt flex items-center justify-center">
+        <Loader2 size={32} className="animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-surface-alt py-12 px-4 sm:px-6 flex items-center justify-center">
+        <div className="max-w-md w-full bg-surface p-8 rounded-2xl shadow-sm border border-border/80">
+          <div className="flex flex-col items-center mb-8">
+            <div className="bg-primary/10 p-4 rounded-full text-primary mb-4">
+              <Lock size={32} />
+            </div>
+            <h1 className="text-2xl font-bold text-text-main text-center font-display">Acceso Restringido</h1>
+            <p className="text-sm text-text-muted text-center mt-2">Solo personal autorizado de SpeedCar.</p>
+          </div>
+          
+          <form onSubmit={handleLogin} className="space-y-5">
+            {loginError && (
+              <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm font-medium flex items-center gap-2">
+                <AlertCircle size={16} /> {loginError}
+              </div>
+            )}
+            <div>
+              <label className="text-xs font-bold text-text-muted uppercase tracking-wider block mb-1.5">Correo Electrónico</label>
+              <input type="email" required value={loginEmail} onChange={(e) => setLoginEmail(e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-text-muted uppercase tracking-wider block mb-1.5">Contraseña</label>
+              <input type="password" required value={loginPassword} onChange={(e) => setLoginPassword(e.target.value)} className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
+            </div>
+            <button type="submit" className="w-full btn-primary py-3 rounded-xl font-bold mt-2 hover:scale-[1.02] transition-transform">Ingresar al Panel</button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-surface-alt py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         <div className="bg-surface rounded-2xl shadow-sm border border-border/80 overflow-hidden">
           
-          <div className="px-6 py-8 border-b border-border/80 bg-surface-inset">
-            <h1 className="text-2xl font-bold text-text-main flex items-center gap-2">
-              <Upload className="text-primary" />
-              Subir Nuevo Vehículo
-            </h1>
-            <p className="text-sm text-text-muted mt-2">
-              Ingresa los detalles. Si dejas la "Descripción de Marketing" vacía, nuestra IA la redactará automáticamente al guardar.
-            </p>
+          <div className="px-6 py-8 border-b border-border/80 bg-surface-inset flex justify-between items-start">
+            <div>
+              <h1 className="text-2xl font-bold text-text-main flex items-center gap-2">
+                <Upload className="text-primary" />
+                Subir Nuevo Vehículo
+              </h1>
+              <p className="text-sm text-text-muted mt-2">
+                Ingresa los detalles. Si dejas la "Descripción de Marketing" vacía, nuestra IA la redactará automáticamente al guardar.
+              </p>
+            </div>
+            <button onClick={handleLogout} className="text-text-muted hover:text-red-500 transition-colors flex flex-col items-center gap-1" title="Cerrar Sesión">
+              <LogOut size={20} />
+              <span className="text-[10px] font-bold uppercase">Salir</span>
+            </button>
           </div>
 
           <form onSubmit={handleSubmit} className="p-6 space-y-8">

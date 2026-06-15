@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore, Timestamp } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import { getAuth } from 'firebase/auth';
 
 // Estas credenciales ahora se leen desde las variables de entorno (.env)
 // Nunca subas tus credenciales reales a GitHub directamente.
@@ -16,5 +17,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
+const auth = getAuth(app);
 
-export { db, storage, Timestamp };
+export { db, storage, auth, Timestamp };
