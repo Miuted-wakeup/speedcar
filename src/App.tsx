@@ -9,6 +9,7 @@ const Vender = lazy(() => import('./pages/Vender'));
 const VehiculoDetail = lazy(() => import('./pages/VehiculoDetail'));
 const AdminUpload = lazy(() => import('./pages/AdminUpload'));
 const Vitrina = lazy(() => import('./pages/Vitrina'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
               <Route path="/vender" element={<Vender />} />
               <Route path="/vehiculo/:id" element={<VehiculoDetail />} />
               <Route path="/admin/upload" element={<AdminUpload />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
         </div>
