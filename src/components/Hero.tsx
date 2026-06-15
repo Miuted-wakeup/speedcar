@@ -21,9 +21,9 @@ export default function Hero({ vehiculos = [] }: Props) {
   );
 
   const heroLines = useMemo(() => [
-    'Explora nuestra selección de carros usados premium en Cali.',
-    'Cada vehículo ha sido verificado exhaustivamente para que',
-    'compres con total tranquilidad y seguridad de peritaje.',
+    'Explora nuestra selección de carros usados premium.',
+    'Vehículos verificados exhaustivamente para que',
+    'compres con total tranquilidad y seguridad.',
   ], []);
 
   const heroFeatures = useMemo(() => [
