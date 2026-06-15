@@ -112,6 +112,11 @@ export default function AdminUpload() {
       return;
     }
 
+    if (!formData.puertas || isNaN(puertasNum) || puertasNum < 2 || puertasNum > 5) {
+      setError('La cantidad de puertas debe ser un número entre 2 y 5.');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
