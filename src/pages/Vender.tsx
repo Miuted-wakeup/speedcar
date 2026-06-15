@@ -16,6 +16,12 @@ export default function Vender() {
     longitud: null as number | null,
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -23,21 +29,61 @@ export default function Vender() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
     
-    // Generar mensaje contextual de WhatsApp
-    const message = `Hola Speed Car, me gustaría solicitar corretaje para vender mi carro:\n\n` +
-      `- Nombre: ${formData.nombre}\n` +
-      `- Teléfono: ${formData.telefono}\n` +
-      `- Vehículo: ${formData.marca} ${formData.modelo} (${formData.año})\n` +
-      `- Kilometraje: ${formData.kilometraje} km\n` +
-      `- Ciudad/Sector: ${formData.ubicacion_ciudad}\n` +
-      `- Ubicación GPS: ${formData.latitud && formData.longitud ? `https://www.google.com/maps?q=${formData.latitud},${formData.longitud}` : 'No especificada'}\n\n` +
-      `Quedo atento para coordinar la sesión de fotos y peritaje.`;
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/solicitudes`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nombre: formData.nombre,
+          telefono: formData.telefono,
+          marca: formData.marca,
+          modelo: formData.modelo,
+          año: parseInt(formData.año),
+          kilometraje: parseInt(formData.kilometraje),
+          ubicacion_ciudad: formData.ubicacion_ciudad,
+          latitud: formData.latitud,
+          longitud: formData.longitud
+        }),
+      });
 
-    const whatsappUrl = `https://wa.me/573137148566?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+      if (!response.ok) {
+        throw new Error('Error de conexión con el servidor.');
+      }
+
+      setSubmitSuccess(true);
+      
+      // Generar mensaje contextual de WhatsApp
+      const message = `Hola Speed Car, acabo de enviar una solicitud en la web para vender mi carro:\n\n` +
+        `- Nombre: ${formData.nombre}\n` +
+        `- Vehículo: ${formData.marca} ${formData.modelo} (${formData.año})\n` +
+        `Quedo atento para coordinar la sesión de fotos y peritaje.`;
+
+      const whatsappUrl = `https://wa.me/573137148566?text=${encodeURIComponent(message)}`;
+      
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+      }, 1500);
+
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || 'Error al enviar la solicitud.');
+      // Fallback a WhatsApp directo si falla la BD
+      const message = `Hola Speed Car, quiero vender mi carro:\n\n` +
+        `- Nombre: ${formData.nombre}\n` +
+        `- Vehículo: ${formData.marca} ${formData.modelo} (${formData.año})\n` +
+        `Quedo atento.`;
+      const whatsappUrl = `https://wa.me/573137148566?text=${encodeURIComponent(message)}`;
+      window.open(whatsappUrl, '_blank');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const features = [
@@ -262,15 +308,34 @@ export default function Vender() {
                     </div>
                   </div>
 
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    type="submit"
-                    className="btn-whatsapp w-full mt-6 py-4 rounded-xl font-bold text-base shadow-[0_0_20px_rgba(37,211,102,0.4)] flex items-center justify-center gap-2"
-                  >
-                    <MessageCircle size={22} className="fill-current" />
-                    Enviar Inversa de Corretaje
-                  </motion.button>
+                  {error && (
+                    <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-sm p-3 rounded-xl mt-4">
+                      {error} Redirigiendo a WhatsApp...
+                    </div>
+                  )}
+
+                  {submitSuccess ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="bg-emerald-500/10 border border-emerald-500/50 text-emerald-500 text-sm p-4 rounded-xl mt-6 text-center font-bold"
+                    >
+                      <CheckCircle2 className="mx-auto mb-2" size={24} />
+                      ¡Solicitud enviada con éxito! Abriendo WhatsApp...
+                    </motion.div>
+                  ) : (
+                    <motion.button
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="btn-whatsapp w-full mt-6 py-4 rounded-xl font-bold text-base shadow-[0_0_20px_rgba(37,211,102,0.4)] flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                      <MessageCircle size={22} className="fill-current" />
+                      {isSubmitting ? 'Enviando...' : 'Enviar Solicitud'}
+                    </motion.button>
+                  )}
+                  
                   <p className="text-center text-xs text-text-muted/70 mt-4">
                     Al enviar aceptas que un asesor te contacte. Tu información está 100% segura.
                   </p>
