@@ -20,6 +20,18 @@ export default function Hero({ vehiculos = [] }: Props) {
     []
   );
 
+  const heroLines = useMemo(() => [
+    'Explora nuestra selección de carros usados premium en Cali.',
+    'Cada vehículo ha sido verificado exhaustivamente para que',
+    'compres con total tranquilidad y seguridad de peritaje.',
+  ], []);
+
+  const heroFeatures = useMemo(() => [
+    { label: 'Peritaje Aprobado', desc: '150 puntos verificados' },
+    { label: 'Traspaso Inmediato', desc: 'Papeles al día en Cali' },
+    { label: 'Garantía Directa', desc: 'Sin intermediarios' }
+  ], []);
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (titleNumber === titles.length - 1) {
@@ -126,21 +138,13 @@ export default function Hero({ vehiculos = [] }: Props) {
             </h1>
 
             <MaskRevealUp
-              lines={[
-                'Explora nuestra selección de carros usados premium en Cali.',
-                'Cada vehículo ha sido verificado exhaustivamente para que',
-                'compres con total tranquilidad y seguridad de peritaje.',
-              ]}
+              lines={heroLines}
               className="text-base sm:text-lg text-text-muted max-w-lg leading-relaxed font-medium"
               delay={400}
             />
 
             <div className="flex flex-wrap gap-2.5 pt-1">
-              {[
-                { label: 'Peritaje Aprobado', desc: '150 puntos verificados' },
-                { label: 'Traspaso Inmediato', desc: 'Papeles al día en Cali' },
-                { label: 'Garantía Directa', desc: 'Sin intermediarios' }
-              ].map((b, idx) => (
+              {heroFeatures.map((b, idx) => (
                 <div key={idx} className="flex items-center gap-2 px-3.5 py-2.5 bg-surface-alt/65 border border-border/80 rounded-xl text-left shadow-xs backdrop-blur-xs hover:border-primary/20 transition-all duration-300">
                   <CheckCircle2 size={16} className="text-primary flex-shrink-0" />
                   <div>
