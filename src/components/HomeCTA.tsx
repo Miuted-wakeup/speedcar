@@ -42,8 +42,8 @@ export default function HomeCTA() {
           <div className="flex-1 relative min-h-[300px] md:min-h-full overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-t md:bg-gradient-to-r from-surface via-surface/80 to-transparent z-10 w-full h-full pointer-events-none"></div>
             <img 
-              src="https://images.unsplash.com/photo-1503376760367-11ea8eb222c9?q=80&w=1200&h=1200&auto=format&fit=crop" 
-              alt="Vehículo deportivo oscuro de alta gama" 
+              src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=1200" 
+              alt="Vehículo en excelentes condiciones" 
               className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-1000"
               loading="lazy"
             />
