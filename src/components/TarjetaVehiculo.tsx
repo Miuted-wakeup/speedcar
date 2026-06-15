@@ -147,8 +147,8 @@ export default function TarjetaVehiculo({ vehiculo, index = 0 }: Props) {
               {vehiculo.marca} {vehiculo.modelo}
             </h2>
           </Link>
-          <p className="text-xs text-text-muted mt-1 uppercase tracking-wider font-semibold">
-            Modelo {vehiculo.año} &bull; {vehiculo.transmision}
+          <p className="text-[11px] text-text-muted mt-1 uppercase tracking-wider font-semibold">
+            Mod. {vehiculo.año} &bull; {vehiculo.transmision} {vehiculo.carroceria ? `• ${vehiculo.carroceria}` : ''} {vehiculo.puertas ? `(${vehiculo.puertas} ptas)` : ''}
           </p>
         </div>
 

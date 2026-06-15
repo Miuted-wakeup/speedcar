@@ -8,12 +8,14 @@ export default function AdminUpload() {
   const [formData, setFormData] = useState({
     marca: '',
     modelo: '',
-    año: new Date().getFullYear(),
+    año: '',
     precio: '',
     kilometraje: '',
-    placa_final: '',
-    transmision: 'Automático',
     color: '',
+    transmision: 'Automático',
+    carroceria: 'SUV',
+    puertas: '5',
+    placa_final: '',
     descripcion_marketing: '', // Si se deja en blanco, la IA lo genera en el BE
     notas_vendedor: '',
     destacado: false,
@@ -88,6 +90,7 @@ export default function AdminUpload() {
     const kmNum = Number(formData.kilometraje);
     const añoNum = Number(formData.año);
     const placaNum = Number(formData.placa_final);
+    const puertasNum = Number(formData.puertas);
 
     if (!formData.precio || isNaN(precioNum) || precioNum <= 0) {
       setError('El Precio es inválido. Debe ser un número mayor a 0 sin puntos ni comas.');
@@ -119,6 +122,7 @@ export default function AdminUpload() {
         precio: Number(formData.precio),
         kilometraje: Number(formData.kilometraje),
         placa_final: Number(formData.placa_final),
+        puertas: Number(formData.puertas),
         ubicacion_ciudad: formData.ubicacion_ciudad.trim() !== '' ? formData.ubicacion_ciudad : null,
         latitud: formData.latitud,
         longitud: formData.longitud,
@@ -157,8 +161,9 @@ export default function AdminUpload() {
       setImagenes([]);
       setPreviewUrls([]);
       setFormData({
-        marca: '', modelo: '', año: new Date().getFullYear(),
+        marca: '', modelo: '', año: '',
         precio: '', kilometraje: '', placa_final: '', transmision: 'Automático',
+        carroceria: 'SUV', puertas: '5',
         color: '', descripcion_marketing: '', notas_vendedor: '', destacado: false,
         ubicacion_ciudad: '', latitud: null, longitud: null,
       });
@@ -234,8 +239,26 @@ export default function AdminUpload() {
                   <option value="Mecánico">Mecánico</option>
                 </select>
               </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-text-muted uppercase">Placa Final (0-9) *</label>
+              
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Carrocería</label>
+                <select name="carroceria" value={formData.carroceria} onChange={handleInputChange} className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none">
+                  <option value="SUV">SUV</option>
+                  <option value="Sedán">Sedán</option>
+                  <option value="Hatchback">Hatchback</option>
+                  <option value="Pick-up">Pick-up</option>
+                  <option value="Coupé">Coupé</option>
+                  <option value="Van/Minivan">Van/Minivan</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Cantidad de Puertas</label>
+                <input required type="number" min="2" max="5" name="puertas" value={formData.puertas} onChange={handleInputChange} placeholder="Ej: 5" className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Último dígito placa</label>
                 <input required type="number" min="0" max="9" name="placa_final" value={formData.placa_final} onChange={handleInputChange} placeholder="Ej: 4" className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
               </div>
               <div className="space-y-1.5 md:col-span-2">

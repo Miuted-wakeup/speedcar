@@ -16,6 +16,8 @@ export interface Vehiculo {
   // Datos Detalles
   transmision: "Automático" | "Mecánico";
   color: string;
+  carroceria?: string;
+  puertas?: number;
   descripcion_marketing: string; // Texto descriptivo para la venta
   
   // Multimedia
