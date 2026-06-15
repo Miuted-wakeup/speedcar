@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Compass, Home } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Link } from "react-router-dom";
