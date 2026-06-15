@@ -4,7 +4,7 @@ const testimonials = [
   {
     name: 'Andrés Valencia',
     role: 'Cliente Comprador',
-    text: 'Increíble la transparencia con el peritaje de los 150 puntos. Compré mi BMW con total confianza. La entrega fue rapidísima y sin dolores de cabeza con el traspaso.',
+    text: 'Increíble la transparencia con el peritaje de los 150 puntos. Compré mi Toyota con total confianza. La entrega fue rapidísima y sin dolores de cabeza con el traspaso.',
     rating: 5,
   },
   {

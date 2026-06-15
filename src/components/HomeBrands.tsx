@@ -1,14 +1,15 @@
 
 
 const brands = [
-  { name: 'bmw', color: 'white' },
-  { name: 'porsche', color: 'white' },
   { name: 'toyota', color: 'white' },
-  { name: 'audi', color: 'white' },
+  { name: 'renault', color: 'white' },
   { name: 'chevrolet', color: 'white' },
+  { name: 'mazda', color: 'white' },
+  { name: 'kia', color: 'white' },
+  { name: 'hyundai', color: 'white' },
   { name: 'ford', color: 'white' },
-  { name: 'honda', color: 'white' },
   { name: 'nissan', color: 'white' },
+  { name: 'honda', color: 'white' },
   { name: 'volkswagen', color: 'white' }
 ];
 
