@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Upload, Plus, Trash2, CheckCircle, AlertCircle, Loader2, Lock, LogOut } from 'lucide-react';
-import { signInWithEmailAndPassword, onAuthStateChanged, signOut, User } from 'firebase/auth';
+import { signInWithEmailAndPassword, onAuthStateChanged, signOut, type User } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import { motion, AnimatePresence } from 'motion/react';
 import type { Vehiculo } from '../types';
