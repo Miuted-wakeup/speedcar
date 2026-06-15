@@ -22,13 +22,13 @@ const socialLinks = [
   {
     name: 'X',
     iconName: 'x',
-    url: 'https://x.com/speedcarcali',
+    url: 'https://x.com/SpeedCarOff',
     handle: '@speedcarcali'
   },
   {
     name: 'YouTube',
     iconName: 'youtube',
-    url: 'https://youtube.com/@speedcar_cali',
+    url: 'https://www.youtube.com/@speecarof',
     handle: 'Speed Car Videos'
   }
 ];
