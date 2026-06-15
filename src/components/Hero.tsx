@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, Search } from 'lucide-react';
+import { motion } from 'framer-motion';
 import SoftBlurIn from './animations/SoftBlurIn';
 import MaskRevealUp from './animations/MaskRevealUp';
 import type { Vehiculo } from '../types';
@@ -12,6 +13,23 @@ interface Props {
 export default function Hero({ vehiculos = [] }: Props) {
   const [stopScroll, setStopScroll] = useState(false);
   const navigate = useNavigate();
+
+  const [titleNumber, setTitleNumber] = useState(0);
+  const titles = useMemo(
+    () => ["ideal", "deportivo", "premium", "familiar", "soñado"],
+    []
+  );
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (titleNumber === titles.length - 1) {
+        setTitleNumber(0);
+      } else {
+        setTitleNumber(titleNumber + 1);
+      }
+    }, 2000);
+    return () => clearTimeout(timeoutId);
+  }, [titleNumber, titles]);
 
   const defaultCardData: Array<{ id?: string, title: string, location: string, image: string }> = [
     {
@@ -85,9 +103,26 @@ export default function Hero({ vehiculos = [] }: Props) {
               Vitrina Cali &bull; Usados Garantizados
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-text-main leading-tight tracking-tight font-display">
-              <SoftBlurIn text="Encuentra tu próximo" as="span" className="block text-text-main" />
-              <SoftBlurIn text="carro ideal en Cali" as="span" className="block text-primary" delay={200} />
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-text-main leading-tight tracking-tight font-display flex flex-col">
+              <SoftBlurIn text="Encuentra tu carro" as="span" className="block text-text-main" />
+              <span className="relative flex w-full justify-start overflow-hidden text-primary h-[1.2em]">
+                {titles.map((title, index) => (
+                  <motion.span
+                    key={index}
+                    className="absolute"
+                    initial={{ opacity: 0, y: "-100%" }}
+                    transition={{ type: "spring", stiffness: 50 }}
+                    animate={
+                      titleNumber === index
+                        ? { y: 0, opacity: 1 }
+                        : { y: titleNumber > index ? "-150%" : "150%", opacity: 0 }
+                    }
+                  >
+                    {title}
+                  </motion.span>
+                ))}
+              </span>
+              <SoftBlurIn text="en Cali" as="span" className="block text-text-main" delay={200} />
             </h1>
 
             <MaskRevealUp
