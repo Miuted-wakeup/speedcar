@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Camera, TrendingUp, ShieldCheck, MessageCircle, HelpCircle, Star, Clock, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import MapPicker from '../components/MapPicker';
 
 export default function Vender() {
   const [formData, setFormData] = useState({
@@ -296,17 +295,7 @@ export default function Vender() {
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Ubicación exacta en mapa (Opcional)</label>
-                    <p className="text-xs text-text-muted/80 mb-3">Haz clic en el mapa para marcar dónde se encuentra el carro para el peritaje.</p>
-                    <div className="h-48 rounded-xl overflow-hidden border border-border/80 shadow-sm">
-                      <MapPicker 
-                        position={formData.latitud ? { lat: formData.latitud, lng: formData.longitud! } : null} 
-                        onChange={(pos) => setFormData({ ...formData, latitud: pos.lat, longitud: pos.lng })} 
-                        className="w-full h-full"
-                      />
-                    </div>
-                  </div>
+                  {/* Se eliminó la ubicación exacta por privacidad */}
 
                   {error && (
                     <div className="bg-red-500/10 border border-red-500/50 text-red-500 text-sm p-3 rounded-xl mt-4">

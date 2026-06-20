@@ -16,20 +16,20 @@ export default function Hero({ vehiculos = [] }: Props) {
 
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
-    () => ["ideal", "deportivo", "premium", "familiar", "soñado"],
+    () => ["ideal", "deportivo", "seguro", "familiar", "soñado"],
     []
   );
 
   const heroLines = useMemo(() => [
-    'Explora nuestra selección de carros usados premium.',
+    'Explora nuestra selección de carros usados garantizados.',
     'Vehículos verificados exhaustivamente para que',
     'compres con total tranquilidad y seguridad.',
   ], []);
 
   const heroFeatures = useMemo(() => [
-    { label: 'Peritaje Aprobado', desc: '150 puntos verificados' },
-    { label: 'Traspaso Inmediato', desc: 'Papeles al día en Cali' },
-    { label: 'Garantía Directa', desc: 'Sin intermediarios' }
+    { label: 'Revisión Técnica Rigurosa', desc: 'Peritaje detallado' },
+    { label: 'Traspaso Ágil y Seguro', desc: 'Acompañamiento total' },
+    { label: 'Trato Directo', desc: 'Compra 100% Segura' }
   ], []);
 
   useEffect(() => {

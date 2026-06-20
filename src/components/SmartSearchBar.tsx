@@ -95,7 +95,7 @@ export default function SmartSearchBar({ onSearch, isLoading, onClear }: Props) 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={displayedPlaceholder}
-            className="w-full py-4 pl-3 pr-12 bg-transparent text-text-main placeholder:text-text-muted text-base md:text-lg focus:outline-none"
+            className="w-full py-4 pl-3 pr-2 bg-transparent text-text-main placeholder:text-text-muted text-base md:text-lg focus:outline-none"
             aria-label="Buscar vehículos con Inteligencia Artificial"
           />
 
@@ -104,7 +104,7 @@ export default function SmartSearchBar({ onSearch, isLoading, onClear }: Props) 
             <button
               type="button"
               onClick={handleClear}
-              className="absolute right-28 p-2 text-text-muted hover:text-text-main transition-colors"
+              className="p-2 mr-1 text-text-muted hover:text-text-main transition-colors flex-shrink-0"
               aria-label="Limpiar búsqueda"
             >
               <X size={18} />

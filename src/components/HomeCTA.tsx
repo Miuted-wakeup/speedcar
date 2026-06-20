@@ -24,7 +24,7 @@ export default function HomeCTA() {
             </h2>
             
             <p className="text-base md:text-lg text-text-muted mb-8 max-w-md">
-              Compramos tu vehículo usado de forma segura, rápida y sin intermediarios. También lo recibimos como parte de pago para tu próximo carro.
+              Compramos tu vehículo usado de forma segura y rápida. También lo recibimos como parte de pago para tu próximo carro.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">

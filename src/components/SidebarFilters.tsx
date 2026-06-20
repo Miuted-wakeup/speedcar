@@ -20,7 +20,7 @@ interface Props {
 }
 
 const ANIOS_DISPONIBLES = Array.from(
-  { length: 17 },
+  { length: 38 },
   (_, i) => String(new Date().getFullYear() + 1 - i)
 );
 
@@ -92,9 +92,10 @@ export default function SidebarFilters({ filtros, setFiltros, onClear, isOpen, o
             <input
               type="number"
               name="precioMin"
-              value={filtros.precioMin}
+              value={filtros.precioMin || ''}
               onChange={handleInputChange}
-              placeholder="Desde"
+              placeholder="Mínimo"
+              min="0"
               className="w-full pl-7 pr-2 py-2 rounded-xl border border-border bg-surface-inset text-sm text-text-main placeholder:text-text-muted/70 focus:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
             />
           </div>
@@ -103,9 +104,10 @@ export default function SidebarFilters({ filtros, setFiltros, onClear, isOpen, o
             <input
               type="number"
               name="precioMax"
-              value={filtros.precioMax}
+              value={filtros.precioMax || ''}
               onChange={handleInputChange}
-              placeholder="Hasta"
+              placeholder="Máximo"
+              min="0"
               className="w-full pl-7 pr-2 py-2 rounded-xl border border-border bg-surface-inset text-sm text-text-main placeholder:text-text-muted/70 focus:bg-surface focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition"
             />
           </div>

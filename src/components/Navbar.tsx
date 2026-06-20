@@ -61,13 +61,6 @@ export default function Navbar() {
         {/* CTA Desktop */}
         <div className="hidden sm:flex items-center gap-3">
           <ThemeToggle />
-          <Link
-            to="/vender"
-            className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors"
-            aria-label="Ir a la página de vender mi carro"
-          >
-            Vende tu Carro
-          </Link>
           <a
             href="https://wa.me/573137148566?text=Hola%2C%20necesito%20asesor%C3%ADa%20sobre%20un%20veh%C3%ADculo."
             target="_blank"

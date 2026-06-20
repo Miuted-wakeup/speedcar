@@ -101,37 +101,7 @@ export default function TarjetaVehiculo({ vehiculo, index = 0 }: Props) {
           </span>
         </div>
 
-        {/* Validador Caleño de Pico y Placa */}
-        <div className="absolute bottom-3 right-3">
-          <div className={clsx(
-            "flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold backdrop-blur-md shadow-sm border",
-            pyPInfo.restringidoAhora 
-              ? "bg-red-500/90 text-white border-red-400/20"
-              : pyPInfo.aplicaHoy 
-                ? "bg-amber-500/90 text-white border-amber-400/20"
-                : "bg-black/60 text-white border-white/10"
-          )}>
-            <span className="relative flex h-2 w-2">
-              <span className={clsx(
-                "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
-                pyPInfo.restringidoAhora 
-                  ? "bg-red-200" 
-                  : pyPInfo.aplicaHoy 
-                    ? "bg-amber-200" 
-                    : "bg-emerald-400"
-              )}></span>
-              <span className={clsx(
-                "relative inline-flex rounded-full h-2 w-2",
-                pyPInfo.restringidoAhora 
-                  ? "bg-red-100" 
-                  : pyPInfo.aplicaHoy 
-                    ? "bg-amber-100" 
-                    : "bg-emerald-500"
-              )}></span>
-            </span>
-            <span>Placa: ···{vehiculo.placa_final}</span>
-          </div>
-        </div>
+
 
         {/* Gradiente inferior */}
         <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/35 to-transparent pointer-events-none" />
@@ -153,19 +123,25 @@ export default function TarjetaVehiculo({ vehiculo, index = 0 }: Props) {
         </div>
 
         {/* Ficha de Tablero Digital */}
-        <div className="grid grid-cols-2 gap-2 bg-surface-alt p-3 rounded-xl border border-border/60">
+        <div className="grid grid-cols-3 gap-2 bg-surface-alt p-3 rounded-xl border border-border/60">
           <div className="space-y-1">
-            <span className="block text-[10px] text-text-muted uppercase tracking-wider font-bold">Odómetro</span>
-            <div className="flex items-center gap-1 text-sm font-mono font-bold text-text-main">
-              <Gauge size={14} className="text-primary flex-shrink-0" />
-              <span>{vehiculo.kilometraje.toLocaleString('es-CO')} KM</span>
+            <span className="block text-[9px] text-text-muted uppercase tracking-wider font-bold">Odómetro</span>
+            <div className="flex items-center gap-1 text-xs font-mono font-bold text-text-main">
+              <Gauge size={12} className="text-primary flex-shrink-0" />
+              <span>{vehiculo.kilometraje.toLocaleString('es-CO')}</span>
             </div>
           </div>
           <div className="space-y-1">
-            <span className="block text-[10px] text-text-muted uppercase tracking-wider font-bold">Ubicación</span>
-            <div className="flex items-center gap-1 text-sm font-semibold text-text-main">
-              <MapPin size={14} className="text-primary flex-shrink-0" />
-              <span>Cali, Valle</span>
+            <span className="block text-[9px] text-text-muted uppercase tracking-wider font-bold">Placa</span>
+            <div className="flex items-center gap-1 text-xs font-semibold text-text-main">
+              <span className="bg-surface border border-border px-1.5 py-0.5 rounded font-mono">···{vehiculo.placa_final}</span>
+            </div>
+          </div>
+          <div className="space-y-1">
+            <span className="block text-[9px] text-text-muted uppercase tracking-wider font-bold">Ciudad</span>
+            <div className="flex items-center gap-1 text-xs font-semibold text-text-main">
+              <MapPin size={12} className="text-primary flex-shrink-0" />
+              <span className="truncate">Cali</span>
             </div>
           </div>
         </div>
