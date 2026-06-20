@@ -18,6 +18,14 @@ export interface Vehiculo {
   color: string;
   carroceria?: string;
   puertas?: number;
+  version?: string;
+  unico_dueno?: boolean;
+  precio_negociable?: boolean;
+  tipo_combustible?: string;
+  tipo_direccion?: string;
+  cilindraje?: number;
+  ciudad_placa?: string;
+  caracteristicas?: string[];
   descripcion_marketing: string; // Texto descriptivo para la venta
   
   // Multimedia

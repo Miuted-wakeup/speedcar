@@ -8,7 +8,8 @@ import {
   ChevronLeft, ChevronRight, ArrowLeft,
   MessageCircle, Gauge, Palette, Settings2,
   Hash, MapPin, Info, ShieldCheck, CheckCircle2,
-  AlertTriangle, Hammer, Wrench, ShieldAlert
+  AlertTriangle, Hammer, Wrench, ShieldAlert,
+  Fuel, Box, Compass, Users, Check, Banknote, CarFront
 } from 'lucide-react';
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'motion/react';
@@ -112,12 +113,19 @@ export default function VehiculoDetail() {
   const pyPInfo = getPicoYPlacaCali(vehiculo.placa_final);
 
   const specs = [
-    { icon: Gauge,    label: 'Kilometraje',    value: `${vehiculo.kilometraje.toLocaleString('es-CO')} km` },
-    { icon: Settings2,label: 'Transmisión',    value: vehiculo.transmision },
-    { icon: Palette,  label: 'Color',          value: vehiculo.color },
-    { icon: Hash,     label: 'Placa termina en', value: `${vehiculo.placa_final} (Cali)` },
-    { icon: MapPin,   label: 'Ciudad',         value: 'Cali, Valle' },
-  ];
+    { icon: Gauge,    label: 'Kilometraje',    value: `${vehiculo.kilometraje.toLocaleString('es-CO')} km`, show: true },
+    { icon: CarFront, label: 'Carrocería',     value: vehiculo.carroceria, show: !!vehiculo.carroceria },
+    { icon: Box,      label: 'Puertas',        value: vehiculo.puertas, show: !!vehiculo.puertas },
+    { icon: Settings2,label: 'Transmisión',    value: vehiculo.transmision, show: true },
+    { icon: Compass,  label: 'Dirección',      value: vehiculo.tipo_direccion, show: !!vehiculo.tipo_direccion },
+    { icon: Fuel,     label: 'Combustible',    value: vehiculo.tipo_combustible, show: !!vehiculo.tipo_combustible },
+    { icon: Wrench,   label: 'Cilindraje',     value: vehiculo.cilindraje ? `${vehiculo.cilindraje} cc` : null, show: !!vehiculo.cilindraje },
+    { icon: Palette,  label: 'Color',          value: vehiculo.color, show: true },
+    { icon: Hash,     label: 'Placa',          value: `Termina en ${vehiculo.placa_final}`, show: true },
+    { icon: MapPin,   label: 'Matrícula',      value: vehiculo.ciudad_placa, show: !!vehiculo.ciudad_placa },
+    { icon: MapPin,   label: 'Ubicación',      value: vehiculo.ubicacion_ciudad || 'Cali, Valle', show: true },
+    { icon: Users,    label: 'Único dueño',    value: vehiculo.unico_dueno ? 'Sí' : 'No especificado', show: !!vehiculo.unico_dueno },
+  ].filter(s => s.show);
 
   // Detalles simulados de la inspección de 150 puntos (Peritaje 360°)
   const peritajeSectores = {
@@ -354,11 +362,18 @@ export default function VehiculoDetail() {
                 <p className="text-text-muted text-xs font-semibold uppercase tracking-wider">
                   Modelo {vehiculo.año} &bull; {vehiculo.transmision}
                 </p>
-                <div className="pt-2">
-                  <p className="text-sm text-text-muted">Precio de lista</p>
-                  <p className="text-4xl font-black text-text-main font-mono tracking-tight mt-1">
-                    {formatPrecio(vehiculo.precio)}
-                  </p>
+                <div className="pt-2 flex flex-col gap-1">
+                  <p className="text-sm text-text-muted">Precio de venta</p>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-1">
+                    <p className="text-4xl font-black text-text-main font-mono tracking-tight">
+                      {formatPrecio(vehiculo.precio)}
+                    </p>
+                    {vehiculo.precio_negociable && (
+                      <span className="inline-flex w-fit items-center gap-1.5 text-[11px] uppercase tracking-wider font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 px-3 py-1.5 rounded-full border border-emerald-500/20">
+                        <Banknote size={14} /> Precio Negociable
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -442,6 +457,22 @@ export default function VehiculoDetail() {
                   ))}
                 </dl>
               </div>
+
+              {/* Equipamiento y Seguridad */}
+              {vehiculo.caracteristicas && vehiculo.caracteristicas.length > 0 && (
+                <div className="space-y-3 pt-2">
+                  <h3 className="text-xs font-bold text-text-muted uppercase tracking-wider">
+                    Equipamiento Destacado
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {vehiculo.caracteristicas.map(c => (
+                      <span key={c} className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-surface text-text-muted text-[11px] font-semibold border border-border/80">
+                        <Check size={12} className="text-primary" /> {c}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Mapa de Ubicación */}
               <div className="pt-1">

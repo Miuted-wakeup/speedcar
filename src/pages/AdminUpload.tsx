@@ -45,6 +45,14 @@ export default function AdminUpload() {
     transmision: 'Automático',
     carroceria: 'SUV',
     puertas: '5',
+    version: '',
+    unico_dueno: false,
+    precio_negociable: false,
+    tipo_combustible: 'Gasolina',
+    tipo_direccion: 'Electroasistida',
+    cilindraje: '',
+    ciudad_placa: '',
+    caracteristicas: [] as string[],
     placa_final: '',
     descripcion_marketing: '', // Si se deja en blanco, la IA lo genera en el BE
     notas_vendedor: '',
@@ -63,6 +71,23 @@ export default function AdminUpload() {
   // Configura aquí la URL de tu backend en Render cuando lo despliegues
   // Ej: https://speedcar-backend.onrender.com
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
+  const opcionesCaracteristicas = [
+    "Airbag delanteros", "Airbags laterales", "Frenos ABS", "Alarma", "Bloqueo Central",
+    "Sensores de reversa", "Cámara de reversa", "Cámara 360", "Sensor punto ciego",
+    "Exploradoras", "Rines de lujo", "Techo corredizo/Sunroof", "Asientos en cuero",
+    "Aire acondicionado", "Vidrios eléctricos", "Espejos eléctricos", "Control de tracción",
+    "Control de descenso", "Radio Bluetooth/Pantalla", "Botón de encendido"
+  ];
+
+  const handleCaracteristicaToggle = (caract: string) => {
+    setFormData(prev => ({
+      ...prev,
+      caracteristicas: prev.caracteristicas.includes(caract)
+        ? prev.caracteristicas.filter(c => c !== caract)
+        : [...prev.caracteristicas, caract]
+    }));
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -158,6 +183,14 @@ export default function AdminUpload() {
         kilometraje: Number(formData.kilometraje),
         placa_final: Number(formData.placa_final),
         puertas: Number(formData.puertas),
+        version: formData.version,
+        unico_dueno: formData.unico_dueno,
+        precio_negociable: formData.precio_negociable,
+        tipo_combustible: formData.tipo_combustible,
+        tipo_direccion: formData.tipo_direccion,
+        cilindraje: formData.cilindraje ? Number(formData.cilindraje) : null,
+        ciudad_placa: formData.ciudad_placa,
+        caracteristicas: formData.caracteristicas,
         ubicacion_ciudad: formData.ubicacion_ciudad.trim() !== '' ? formData.ubicacion_ciudad : null,
         latitud: formData.latitud,
         longitud: formData.longitud,
@@ -198,7 +231,8 @@ export default function AdminUpload() {
       setFormData({
         marca: '', modelo: '', año: '',
         precio: '', kilometraje: '', placa_final: '', transmision: 'Automático',
-        carroceria: 'SUV', puertas: '5',
+        carroceria: 'SUV', puertas: '5', version: '', unico_dueno: false, precio_negociable: false,
+        tipo_combustible: 'Gasolina', tipo_direccion: 'Electroasistida', cilindraje: '', ciudad_placa: '', caracteristicas: [],
         color: '', descripcion_marketing: '', notas_vendedor: '', destacado: false,
         ubicacion_ciudad: '', latitud: null, longitud: null,
       });
@@ -340,11 +374,72 @@ export default function AdminUpload() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Último dígito placa</label>
+                <label className="block text-xs font-bold uppercase tracking-wider text-text-muted mb-2">Último dígito placa *</label>
                 <input required type="number" min="0" max="9" name="placa_final" value={formData.placa_final} onChange={handleInputChange} placeholder="Ej: 4" className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
               </div>
-              <div className="space-y-1.5 md:col-span-2">
-                <label className="text-xs font-bold text-text-muted uppercase">Ciudad o Barrio (Ej. Cali, Sur) *</label>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-text-muted uppercase">Ciudad Placa (Ej. Cali, Buga)</label>
+                <input name="ciudad_placa" value={formData.ciudad_placa} onChange={handleInputChange} placeholder="Ej: Cali" className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-text-muted uppercase">Versión</label>
+                <input name="version" value={formData.version} onChange={handleInputChange} placeholder="Ej: Grand Touring LX" className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-text-muted uppercase">Cilindraje (cc)</label>
+                <input type="number" name="cilindraje" value={formData.cilindraje} onChange={handleInputChange} placeholder="Ej: 2500" className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-text-muted uppercase">Combustible</label>
+                <select name="tipo_combustible" value={formData.tipo_combustible} onChange={handleInputChange} className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none">
+                  <option value="Gasolina">Gasolina</option>
+                  <option value="Diésel">Diésel</option>
+                  <option value="Híbrido">Híbrido</option>
+                  <option value="Eléctrico">Eléctrico</option>
+                  <option value="Gas">Gas (GNV)</option>
+                </select>
+              </div>
+              <div className="space-y-1.5">
+                <label className="text-xs font-bold text-text-muted uppercase">Dirección</label>
+                <select name="tipo_direccion" value={formData.tipo_direccion} onChange={handleInputChange} className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none">
+                  <option value="Electroasistida">Electroasistida</option>
+                  <option value="Hidráulica">Hidráulica</option>
+                  <option value="Mecánica">Mecánica</option>
+                </select>
+              </div>
+              <div className="space-y-1.5 flex items-center gap-6 col-span-1 md:col-span-2">
+                <label className="flex items-center gap-2 cursor-pointer mt-4">
+                  <input type="checkbox" name="unico_dueno" checked={formData.unico_dueno} onChange={handleInputChange} className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary" />
+                  <span className="text-sm font-semibold text-text-main">Único Dueño</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer mt-4">
+                  <input type="checkbox" name="precio_negociable" checked={formData.precio_negociable} onChange={handleInputChange} className="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary" />
+                  <span className="text-sm font-semibold text-text-main">Precio Negociable</span>
+                </label>
+              </div>
+              
+              {/* Características Extras */}
+              <div className="space-y-2 md:col-span-2 mt-4">
+                <label className="text-xs font-bold text-text-muted uppercase border-b border-border pb-2 block mb-3">Equipamiento y Seguridad (Selecciona varios)</label>
+                <div className="flex flex-wrap gap-2">
+                  {opcionesCaracteristicas.map((caract) => {
+                    const isSelected = formData.caracteristicas.includes(caract);
+                    return (
+                      <button
+                        key={caract}
+                        type="button"
+                        onClick={() => handleCaracteristicaToggle(caract)}
+                        className={`px-3 py-1.5 rounded-full text-[11px] font-semibold transition-colors ${isSelected ? 'bg-primary text-white border-transparent' : 'bg-surface border border-border text-text-muted hover:border-primary/50 hover:text-text-main'}`}
+                      >
+                        {caract}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="space-y-1.5 md:col-span-2 mt-4">
+                <label className="text-xs font-bold text-text-muted uppercase">Ciudad o Barrio de Ubicación (Ej. Cali, Sur) *</label>
                 <input required name="ubicacion_ciudad" value={formData.ubicacion_ciudad} onChange={handleInputChange} placeholder="Ej: Ciudad Jardín, Cali" className="w-full px-4 py-2.5 rounded-xl border border-border bg-surface-alt focus:ring-2 focus:ring-primary/50 outline-none" />
               </div>
               <div className="space-y-1.5 md:col-span-2">
