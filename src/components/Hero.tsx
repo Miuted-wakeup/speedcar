@@ -16,7 +16,7 @@ export default function Hero({ vehiculos = [] }: Props) {
 
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
-    () => ["ideal", "deportivo", "seguro", "familiar", "soñado"],
+    () => ["ideal", "perfecto", "seguro", "familiar", "soñado"],
     []
   );
 
